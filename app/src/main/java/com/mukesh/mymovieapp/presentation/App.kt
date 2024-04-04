@@ -7,19 +7,20 @@ import com.mukesh.mymovieapp.presentation.di.artist.ArtistSubComponent
 import com.mukesh.mymovieapp.presentation.di.core.*
 import com.mukesh.mymovieapp.presentation.di.movie.MovieSubComponent
 import com.mukesh.mymovieapp.presentation.di.tvshow.TvShowSubComponent
-import javax.inject.Inject
 
+/*
+*App Application class for setup and initialization
+ */
 class App : Application(), Injector {
-private lateinit var appComponent:AppComponent
+    private lateinit var appComponent: AppComponent
 
     override fun onCreate() {
         super.onCreate()
-        appComponent = DaggerAppComponent.create
+        appComponent = DaggerAppComponent.builder()
             .appModule(AppModule(applicationContext))
             .netModule(NetModule(BuildConfig.BASE_URL))
             .remoteDataModule(RemoteDataModule(BuildConfig.API_KEY))
             .build()
-
     }
 
     override fun createMovieSubComponent(): MovieSubComponent {
@@ -27,7 +28,7 @@ private lateinit var appComponent:AppComponent
     }
 
     override fun createTvShowSubComponent(): TvShowSubComponent {
-       return appComponent.tvShowSubComponent().create()
+        return appComponent.tvShowSubComponent().create()
     }
 
     override fun createArtistSubComponent(): ArtistSubComponent {

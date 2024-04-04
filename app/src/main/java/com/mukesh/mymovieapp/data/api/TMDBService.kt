@@ -30,7 +30,4 @@ interface TMDBService {
         ) apiKey: String
     ): Response<ArtistList>
 
-
-
-
 }

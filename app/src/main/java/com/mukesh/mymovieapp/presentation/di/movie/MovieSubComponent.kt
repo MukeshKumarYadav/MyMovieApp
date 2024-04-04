@@ -1,6 +1,5 @@
 package com.mukesh.mymovieapp.presentation.di.movie
 
-import com.mukesh.mymovieapp.presentation.artist.ArtistActivity
 import com.mukesh.mymovieapp.presentation.movie.MovieActivity
 import dagger.Subcomponent
 
@@ -10,8 +9,8 @@ interface MovieSubComponent {
     fun inject(movieActivity: MovieActivity)
 
     @Subcomponent.Factory
-    interface Factory{
-        fun create():MovieSubComponent
+    interface Factory {
+        fun create(): MovieSubComponent
     }
 
 }

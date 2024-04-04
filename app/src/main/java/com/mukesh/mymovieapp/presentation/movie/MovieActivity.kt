@@ -17,6 +17,11 @@ import com.mukesh.mymovieapp.databinding.ActivityMovieBinding
 import com.mukesh.mymovieapp.presentation.di.Injector
 import javax.inject.Inject
 
+/**
+ * [MovieActivity]
+ * screen to show the list of movies with details
+ * @author Mukesh Kumar Yadav on 2024-04-04
+ */
 class MovieActivity : AppCompatActivity() {
     @Inject
     lateinit var factory: MovieViewModelFactory
@@ -38,6 +43,7 @@ class MovieActivity : AppCompatActivity() {
 
     }
 
+    //setup Recycler view
     private fun initRecyclerView() {
         binding.movieRecyclerView.layoutManager = LinearLayoutManager(this)
         adapter = MovieAdapter()
@@ -45,6 +51,7 @@ class MovieActivity : AppCompatActivity() {
         displayPopularMovies()
     }
 
+    //Display movies in list
     private fun displayPopularMovies() {
         binding.movieProgressBar.visibility = View.VISIBLE
         val responseLiveData = movieViewModel.getMovies()
@@ -60,33 +67,42 @@ class MovieActivity : AppCompatActivity() {
         })
     }
 
+    /*
+    *Create option menu to refresh and reload the data
+     */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.update, menu)
         return true
     }
 
-
+    /*
+     *Handle refresh option menu button click
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_update -> {
                 updateMovies()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
 
     }
 
-    private fun updateMovies(){
+    /*
+    *Update movie list on refresh click
+     */
+    private fun updateMovies() {
         binding.movieProgressBar.visibility = View.VISIBLE
         val response = movieViewModel.updateMovies()
         response.observe(this, Observer {
-            if(it!=null){
+            if (it != null) {
                 adapter.setList(it)
                 adapter.notifyDataSetChanged()
                 binding.movieProgressBar.visibility = View.GONE
-            }else{
+            } else {
                 binding.movieProgressBar.visibility = View.GONE
             }
         })

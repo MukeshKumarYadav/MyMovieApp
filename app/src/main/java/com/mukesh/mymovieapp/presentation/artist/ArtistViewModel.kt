@@ -9,10 +9,10 @@ import com.mukesh.mymovieapp.domain.usecase.UpdateArtistsUseCase
 class ArtistViewModel(
     private val getArtistsUseCase: GetArtistsUseCase,
     private val updateArtistsUseCase: UpdateArtistsUseCase
-): ViewModel() {
+) : ViewModel() {
 
     fun getArtists() = liveData {
-        Log.i("ARTTAG","artist view model getArtists")
+        Log.i("ARTTAG", "artist view model getArtists")
         val artistList = getArtistsUseCase.execute()
         emit(artistList)
     }

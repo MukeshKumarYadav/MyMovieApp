@@ -17,6 +17,11 @@ import com.mukesh.mymovieapp.databinding.ActivityArtistBinding
 import com.mukesh.mymovieapp.presentation.di.Injector
 import javax.inject.Inject
 
+/**
+ * [ArtistActivity]
+ * screen to show the list of movies with details
+ * @author Mukesh Kumar Yadav on 2024-04-04
+ */
 class ArtistActivity : AppCompatActivity() {
     @Inject
     lateinit var factory: ArtistViewModelFactory
@@ -25,66 +30,78 @@ class ArtistActivity : AppCompatActivity() {
     private lateinit var binding: ActivityArtistBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_artist)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_artist)
         (application as Injector).createArtistSubComponent()
             .inject(this)
 
-        artistViewModel= ViewModelProvider(this,factory)
+        artistViewModel = ViewModelProvider(this, factory)
             .get(ArtistViewModel::class.java)
         initRecyclerView()
     }
 
-    private fun initRecyclerView(){
-        Log.i("ARTTAG","artist activity init recycler view")
+    //setup Recycler view
+    private fun initRecyclerView() {
+        Log.i("ARTTAG", "artist activity init recycler view")
         binding.artistRecyclerView.layoutManager = LinearLayoutManager(this)
         adapter = ArtistAdapter()
         binding.artistRecyclerView.adapter = adapter
         displayPopularArtists()
     }
 
-    private fun displayPopularArtists(){
-        Log.i("ARTTAG","artist activity display popular atrtist")
+    //Display artists details in list
+    private fun displayPopularArtists() {
+        Log.i("ARTTAG", "artist activity display popular atrtist")
         binding.artistProgressBar.visibility = View.VISIBLE
         val responseLiveData = artistViewModel.getArtists()
         responseLiveData.observe(this, Observer {
-            if(it!=null){
-                Log.i("ARTTAG","observed ${it.toString()}")
+            if (it != null) {
+                Log.i("ARTTAG", "observed ${it.toString()}")
                 adapter.setList(it)
                 adapter.notifyDataSetChanged()
                 binding.artistProgressBar.visibility = View.GONE
-            }else{
+            } else {
                 binding.artistProgressBar.visibility = View.GONE
-                Toast.makeText(applicationContext,"No data available", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "No data available", Toast.LENGTH_LONG).show()
             }
         })
     }
 
+    /*
+    *Create option menu to refresh and reload the data
+     */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater : MenuInflater = menuInflater
-        inflater.inflate(R.menu.update,menu)
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.update, menu)
         return true
     }
 
+    /*
+     *Handle refresh option menu button click
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId){
+        return when (item.itemId) {
             R.id.action_update -> {
-                updateTvShows()
+                updateArtist()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
 
     }
 
-    private fun updateTvShows(){
+    /*
+   *Update artists list on refresh click
+    */
+    private fun updateArtist() {
         binding.artistProgressBar.visibility = View.VISIBLE
         val response = artistViewModel.updateArtists()
         response.observe(this, Observer {
-            if(it!=null){
+            if (it != null) {
                 adapter.setList(it)
                 adapter.notifyDataSetChanged()
                 binding.artistProgressBar.visibility = View.GONE
-            }else{
+            } else {
                 binding.artistProgressBar.visibility = View.GONE
             }
         })

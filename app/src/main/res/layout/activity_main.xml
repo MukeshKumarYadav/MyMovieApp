@@ -20,8 +20,8 @@
             android:textColor="@color/colorWhite"
             android:background="@drawable/btn_rounded"
             android:padding="15dp"
-            android:text="Movies"
-            android:textSize="50sp" />
+            android:text="@string/movies"
+            android:textSize="45sp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/tv_button"
@@ -34,8 +34,8 @@
             android:textColor="@color/colorWhite"
             android:background="@drawable/btn_rounded"
             android:padding="15dp"
-            android:text="Tv Shows"
-            android:textSize="50sp" />
+            android:text="@string/tv_shows"
+            android:textSize="45sp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/artists_button"
@@ -48,7 +48,7 @@
             android:textColor="@color/colorWhite"
             android:background="@drawable/btn_rounded"
             android:padding="15dp"
-            android:text="Artists"
-            android:textSize="50sp" />
+            android:text="@string/artists"
+            android:textSize="45sp" />
     </LinearLayout>
 </layout>

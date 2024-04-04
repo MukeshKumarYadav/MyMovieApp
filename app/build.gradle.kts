@@ -2,7 +2,6 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id ("kotlin-kapt")
-    //kotlin("kapt")
 }
 
 android {
@@ -17,8 +16,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "API_KEY", "\"f60ae473c8d03fdd88e75848cea96a8e\"")
-        buildConfigField("String","BASE_URL","\"https://api.themoviedb.org/3/\"")
+        buildConfigField("String", "API_KEY", "\"bc25d9552d048be6b200561cc242e329\"")
+        buildConfigField("String","BASE_URL","\"https://api.themoviedb.org/3/\"") //
     }
 
     buildTypes {
@@ -41,17 +40,15 @@ android {
         dataBinding = true
        buildConfig = true
     }
-//    kapt {
-//        generateStubs = true
-//    }
 }
 
 dependencies {
     val lifecycle_version = "2.7.0"
     val room_version = "2.6.1"
     val dagger_version = "2.51.1"
-    val retrofit_version = "2.9.0"
-    val glide_version = "4.13.2"
+    val retrofit_version = "2.11.0"
+    val glide_version = "4.16.0"
+    val coroutines_version = "1.8.0"
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -74,13 +71,13 @@ dependencies {
     implementation ("androidx.room:room-ktx:$room_version")
 
     //Coroutines
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
 
     //Dagger
     implementation ("com.google.dagger:dagger:$dagger_version")
-    //kapt ("com.google.dagger:dagger-compiler:$dagger_version")
-    annotationProcessor ("com.google.dagger:dagger-compiler:$dagger_version")
-
+    implementation ("com.google.dagger:dagger-android-support:$dagger_version")
+    kapt ("com.google.dagger:dagger-android-processor:$dagger_version")
+    kapt ("com.google.dagger:dagger-compiler:$dagger_version")
 
     //Retrofit
     implementation ("com.squareup.retrofit2:retrofit:$retrofit_version")

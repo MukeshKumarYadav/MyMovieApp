@@ -3,7 +3,6 @@ package com.mukesh.mymovieapp.presentation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.mukesh.mymovieapp.R
-
 import android.content.Intent
 import androidx.databinding.DataBindingUtil
 import com.mukesh.mymovieapp.presentation.artist.ArtistActivity
@@ -11,11 +10,16 @@ import com.mukesh.mymovieapp.databinding.ActivityMainBinding
 import com.mukesh.mymovieapp.presentation.movie.MovieActivity
 import com.mukesh.mymovieapp.presentation.tv.TvShowActivity
 
+/**
+ * [MainActivity]
+ * Home screen to show list of buttons of movies, tv_shows and artists and handle click of all buttons
+ * @author Mukesh Kumar Yadav on 2024-04-04
+ */
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.movieButton.setOnClickListener {
             val intent = Intent(this, MovieActivity::class.java)
             startActivity(intent)
